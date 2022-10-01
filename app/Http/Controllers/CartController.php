@@ -15,7 +15,8 @@ class CartController extends Controller
     //
     public function shop_cart(){
         $categories = Category::get();
-        return view('cart.shop_cart')->with(compact('categories'));
+        $title = 'Shop Cart';
+        return view('cart.shop_cart')->with(compact('categories','title'));
     }
     public function save_cart(Request $request){
         $categories = Category::get();
