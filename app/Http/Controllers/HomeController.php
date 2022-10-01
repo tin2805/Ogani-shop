@@ -15,24 +15,27 @@ class HomeController extends Controller
 {
     //
     public function index(){
-        $categories = Category::where('category_status', 1)->limit(5)->get();  
-        return view('layout')->with(compact('categories'));
+        $categories = Category::where('category_status', 1)->limit(5)->get();
+        $title = 'HomePage';
+        return view('layout')->with(compact('categories','title'));
     }
     public function homepage(){
         $categories = Category::where('category_status', 1)->limit(5)->get();
         $feature_product = Product::where('product_feature',0)->limit(4)->get();
         $lated_product = Product::orderby('product_id','DESC')->limit(6)->get();
+        $title = 'HomePage';
         // return $lated_product->slice(0,3);
         // return $lated_product;
         // $product_img = ProductImages::all();
         // return str_replace(' ','',$);
-        return view('pages.homepage')->with(compact('categories','feature_product','lated_product'));
+        return view('pages.homepage')->with(compact('categories','feature_product','lated_product','title'));
     }
     public function shop_grid(){
         $categories = Category::get();
         $products = Product::all();
         $min_price = 0;
         $max_price = 2000;
+        $title = 'Shop Grid';
         if($products){
             if(isset($_GET['sort-by-name'])){
                 $sort_by_name = $_GET['sort-by-name'];
@@ -63,7 +66,7 @@ class HomeController extends Controller
                 $products = Product::all();
             }
         }
-        return view('pages.shop_grid')->with(compact('categories','products','min_price','max_price'));
+        return view('pages.shop_grid')->with(compact('categories','products','min_price','max_price','title'));
     }
     public function show_login(){
         return view('pages.show_login');
@@ -119,6 +122,7 @@ class HomeController extends Controller
         $products = Product::with('category')->where('category_id',$category_id)->get();
         $min_price = 0;
         $max_price = 2000;
+        $title = 'Shop Grid';
         if($products){
             if(isset($_GET['sort-by-name'])){
                 $sort_by_name = $_GET['sort-by-name'];
@@ -149,27 +153,31 @@ class HomeController extends Controller
                 $products = Product::with('category')->where('category_id',$category_id)->get();
             }
         }
-        return view('pages.shop_grid')->with(compact('products','categories','min_price','max_price'));
+        return view('pages.shop_grid')->with(compact('products','categories','min_price','max_price','title'));
     }
     public function shop_detail($product_id){
         $categories = Category::get();
         $product = Product::with('product_imgs')->where('product_id',$product_id)->first();
         $related_products = Category::with('products')->where('category_id',$product->category_id)->first();
+        $title = 'Shop Detail';
         // return $related_product->products;
         $related_product_img = Product::with('product_imgs')->where('product_id',$related_products->products[0]->product_id)->first();
         // return $related_product_img->product_imgs;
-        return view('pages.shop_detail')->with(compact('categories','product','related_products','related_product_img'));
+        return view('pages.shop_detail')->with(compact('categories','product','related_products','related_product_img','title'));
     }
     public function show_blog(){
         $categories = Category::get();
-        return view('pages.blog')->with(compact('categories'));
+        $title = 'Blog';
+        return view('pages.blog')->with(compact('categories','title'));
     }
     public function show_checkout(){
         $categories = Category::get();
-        return view('pages.checkout')->with(compact('categories'));
+        $title = 'Check Out';
+        return view('pages.checkout')->with(compact('categories','title'));
     }
     public function show_contact(){
         $categories = Category::get();
-        return view('pages.contact')->with(compact('categories'));
+        $title = 'Contact';
+        return view('pages.contact')->with(compact('categories','title'));
     }
 }
