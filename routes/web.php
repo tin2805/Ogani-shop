@@ -17,7 +17,7 @@ use App\Http\Controllers\CartController;
 |
 */
 
-//FrontEnd
+//FrontEnd 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/', [HomeController::class, 'homepage']);
 Route::get('/shop-grid', [HomeController::class, 'shop_grid']);
