@@ -15,9 +15,8 @@ class HomeController extends Controller
 {
     //
     public function index(){
-        $categories = Category::where('category_status', 1)->limit(5)->get();
         $title = 'HomePage';
-        return view('layout')->with(compact('categories','title'));
+        return view('layout')->with(compact('title'));
     }
     public function homepage(){
         $categories = Category::where('category_status', 1)->limit(5)->get();
